@@ -722,7 +722,7 @@ dlgDialog (tr ("Bill Of Material"))
     dlgStretch(1);
   }
   dlgHBoxLayout  {
-    dlgPushButton (tr ("+Vie&w"))    ViewList ();
+    dlgPushButton (tr ("+Vie&w"))   ViewList ();
     dlgPushButton (tr ("&Save...")) SaveList ();
     dlgPushButton (tr ("H&elp"))    DisplayHelp ();
     dlgPushButton (tr ("-Close"))   dlgAccept ();
