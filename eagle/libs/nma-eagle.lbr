@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -2202,6 +2202,20 @@ https://b2b.harting.com/files/download/PRD/PDF_TS/0956152X613_100510341DRW001D.p
 <wire x1="3" y1="-1.5" x2="-3" y2="-1.5" width="0.127" layer="39"/>
 <wire x1="-3" y1="-1.5" x2="-3" y2="1.5" width="0.127" layer="39"/>
 </package>
+<package name="KEMET-C1206C220K3HACTU">
+<smd name="1" x="-1.6" y="0" dx="1.35" dy="1.9" layer="1"/>
+<smd name="2" x="1.6" y="0" dx="1.35" dy="1.9" layer="1"/>
+<text x="-3.2" y="2.184" size="1.27" layer="21">&gt;Name</text>
+<text x="-3.2" y="-3.2" size="1.27" layer="21">&gt;Value</text>
+<wire x1="-2.8" y1="1.6" x2="2.8" y2="1.6" width="0.127" layer="21"/>
+<wire x1="2.8" y1="-1.45" x2="2.8" y2="1.45" width="0.127" layer="21"/>
+<wire x1="-2.8" y1="-1.6" x2="2.8" y2="-1.6" width="0.127" layer="21"/>
+<wire x1="-2.8" y1="-1.45" x2="-2.8" y2="1.45" width="0.127" layer="21"/>
+<wire x1="-3" y1="1.5" x2="3" y2="1.5" width="0.127" layer="39"/>
+<wire x1="3" y1="1.5" x2="3" y2="-1.5" width="0.127" layer="39"/>
+<wire x1="3" y1="-1.5" x2="-3" y2="-1.5" width="0.127" layer="39"/>
+<wire x1="-3" y1="-1.5" x2="-3" y2="1.5" width="0.127" layer="39"/>
+</package>
 <package name="2X3-SHROUDED" urn="urn:adsk.eagle:footprint:37928/1">
 <description>&lt;h3&gt;Plated Through Hole - 2x3 Shrouded Header&lt;/h3&gt;
 &lt;p&gt;Specifications:
@@ -3382,6 +3396,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 <technology name="">
 <attribute name="DATASHEET" value="https://www.mouser.fr/datasheet/2/418/4/NG_DS_1773204-6_A-1533241.pdf"/>
 <attribute name="POWER" value="5W"/>
+<attribute name="MOUSER_REF" value="N/A"/>
 </technology>
 </technologies>
 </device>
@@ -3405,6 +3420,7 @@ Source: &lt;a href="https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/A
 <attribute name="HEIGHT" value="0.7mm" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Panasonic" constant="no"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="ERJ-14NF2200U" constant="no"/>
+<attribute name="MOUSER_REF" value="667-ERJ-14NF2200U"/>
 <attribute name="MOUSER_PART_NUMBER" value="667-ERJ-14NF2200U" constant="no"/>
 <attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.co.uk/ProductDetail/Panasonic/ERJ-14NF2200U?qs=cYDwVL8Dk%2FntiwgKbjgkoQ%3D%3D" constant="no"/>
 </technology>
@@ -3537,6 +3553,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 <attribute name="AVAILABILITY" value="Unavailable"/>
 <attribute name="DESCRIPTION" value=" Buffer/Converter 6-CH Non-Inverting 3-ST CMOS 16-Pin SOIC "/>
 <attribute name="MF" value="Toshiba Semiconductor"/>
+<attribute name="MOUSER_REF" value="757-74HC4050DBJ"/>
 <attribute name="MP" value="74HC4050D"/>
 <attribute name="PACKAGE" value="SOIC-16 Toshiba"/>
 <attribute name="PRICE" value="None"/>
@@ -3556,7 +3573,9 @@ KEL 1168-056-009&lt;br&gt;</description>
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="576-1206L050YR"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -3576,6 +3595,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="571-292304-1"/>
 <attribute name="COMMENT" value="292304-1"/>
 <attribute name="DESCRIPTION" value=" USB B R/A RECP CONNECTOR,LEAD FREE "/>
 <attribute name="DIGI-KEY_PART_NUMBER" value="A31725-ND"/>
@@ -3605,6 +3625,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="506-FSM4JAH"/>
 <attribute name="COMMENT" value="1825910-7"/>
 <attribute name="CONFIGURATION_POLE-THROW" value="Single Pole - Single Throw"/>
 <attribute name="CONTACT_CURRENT_RATING" value="50 mA"/>
@@ -3663,6 +3684,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="556-ATMEGA328PB-AUR"/>
 <attribute name="DESCRIPTION" value=" AVR microcontroller; EEPROM: 1024B; SRAM: 2kB; Flash: 32kB; TQFP32 "/>
 <attribute name="DIGI-KEY_PART_NUMBER" value="ATMEGA328PB-AURCT-ND"/>
 <attribute name="DIGI-KEY_PURCHASE_URL" value="https://www.digikey.fr/product-detail/en/microchip-technology/ATMEGA328PB-AUR/ATMEGA328PB-AURCT-ND/5722706?utm_source=snapeda&amp;utm_medium=aggregator&amp;utm_campaign=symbol"/>
@@ -3700,6 +3722,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="757-74HC165DBJ"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="CD74HC165M" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
@@ -3781,6 +3804,7 @@ Source: &lt;a href="https://www.hirose.com/product/en/download_file/key_name/DM3
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="798-DM3AT-SF-PEJM5"/>
 <attribute name="DESCRIPTION" value="DM3 RA SMT microSD memory card push/push DM3 RA SMT microSD memory card push/push" constant="no"/>
 <attribute name="HEIGHT" value="mm" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Hirose" constant="no"/>
@@ -3813,6 +3837,7 @@ Source: &lt;a href="https://www.hirose.com/product/en/download_file/key_name/DM3
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="798-DM3CSSF"/>
 <attribute name="DESCRIPTION" value=" Conn Micro SD Card HDR 8 POS 1.1mm Solder RA SMD Embossed T/R 0.5A "/>
 <attribute name="DIGI-KEY_PART_NUMBER" value="HR1972CT-ND"/>
 <attribute name="DIGI-KEY_PURCHASE_URL" value="https://www.digikey.fr/product-detail/en/hirose-electric-co-ltd/DM3CS-SF/HR1972CT-ND/2602740?utm_source=snapeda&amp;utm_medium=aggregator&amp;utm_campaign=symbol"/>
@@ -3850,6 +3875,7 @@ Source: &lt;a href="https://www.hirose.com/product/en/download_file/key_name/DM3
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="700-DS3231SN#T&amp;R-"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="DS3231SN#T&amp;R" constant="no"/>
 <attribute name="VENDOR" value="Maxim Integrated Products" constant="no"/>
 </technology>
@@ -3959,6 +3985,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="595-LM358D"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="LM358DT" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
@@ -4030,6 +4057,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="926-LM3940IMP3.3NOPB"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="LM3940IMP3.3NOPB" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
@@ -4066,6 +4094,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="595-LP2981-33DBVR"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="LP298133DBVR" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
@@ -4117,6 +4146,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="512-NDT2955"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="NDT2955" constant="no"/>
 <attribute name="VENDOR" value="Fairchild Semiconductor" constant="no"/>
 </technology>
@@ -4163,7 +4193,9 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="755-RRE07VTM4SFHTR"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4179,7 +4211,9 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 <connect gate="G$1" pin="-" pad="3 4"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="855-S8411-45R"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4249,7 +4283,9 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 <connect gate="G$1" pin="_D" pad="_D"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="798-CR7E-56DA-3.96E"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4267,7 +4303,8 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 <connect gate="R?" pin="WIPER" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+</technology>
 </technologies>
 </device>
 <device name="3362U-2" package="3362U-2">
@@ -4290,6 +4327,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="652-3306F-1-102"/>
 <attribute name="PROD_ID" value="RES-08445"/>
 </technology>
 </technologies>
@@ -4366,7 +4404,9 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 <connect gate="G$1" pin="9" pad="9"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="617-09-56-152-7613"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4394,6 +4434,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <attribute name="MANUFACTURER_NAME" value="NKK Switches" constant="no"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="SS22SDP2" constant="no"/>
 <attribute name="MOUSER_PART_NUMBER" value="633-SS22SDP2" constant="no"/>
+<attribute name="MOUSER_REF" value="633-SS22SDP2"/>
 </technology>
 </technologies>
 </device>
@@ -4414,7 +4455,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="G$1" pin="6" pad="6"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="553-TY145P"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4433,6 +4476,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="490-SJ1-3523N"/>
 <attribute name="CUI_PURCHASE_URL" value="https://www.cui.com/product/interconnect/audio-connectors/jacks/3.5-mm-jacks/sj1-352xn-series?utm_source=snapeda.com&amp;utm_medium=referral&amp;utm_campaign=snapedaBOM"/>
 <attribute name="DESCRIPTION" value=" SJ1 Series 3.5 mm 12 V Right Angle Through Hole Stereo Audio Jack "/>
 <attribute name="DIGI-KEY_PART_NUMBER" value="CP1-3523N-ND"/>
@@ -4484,7 +4528,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="652-CRM2512AJW103ELF"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4500,7 +4546,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="80-C1210C104K4J"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4530,7 +4578,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="80-C1206X334K5R"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4546,7 +4596,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="-"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="604-APTD1608LCGCK"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4562,7 +4614,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="652-CHP0603FX1001ELF"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4578,7 +4632,9 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="80-C1210C106K8N"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4608,6 +4664,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 </package3dinstances>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="815-ABL-16-B1U"/>
 <attribute name="PROD_ID" value="XTAL-08218"/>
 <attribute name="SF_ID" value="COM-00094"/>
 <attribute name="VALUE" value="16MHz"/>
@@ -4643,7 +4700,27 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 <connect gate="A" pin="P$2" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="MOUSER_REF" value="80-C1206C334M5R"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="KEMET-C1206C220K3HACTU" prefix="C">
+<gates>
+<gate name="A" symbol="CMS-CAPACITOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="KEMET-C1206C220K3HACTU">
+<connects>
+<connect gate="A" pin="P$1" pad="1"/>
+<connect gate="A" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MOUSER_REF" value="80-C1206C220K3HACTU"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -4695,6 +4772,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/SS22SDP2.pdf"
 </package3dinstances>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="649-773134AE26LF"/>
 <attribute name="PROD_ID" value="CONN-10681"/>
 <attribute name="SF_ID" value="PRT_10877" constant="no"/>
 </technology>
@@ -4823,6 +4901,7 @@ Source: &lt;a href=""&gt; Datasheet &lt;/a&gt;</description>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="MOUSER_REF" value="571-796136-1"/>
 <attribute name="DESCRIPTION" value="Holder pcb 2 way Battery TE Connectivity Surface Mount Battery Holder for 1, Leaf Spring Contact" constant="no"/>
 <attribute name="HEIGHT" value="mm" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="TE Connectivity" constant="no"/>
