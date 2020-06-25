@@ -3672,7 +3672,7 @@ KEL 1168-056-009&lt;br&gt;</description>
 <technologies>
 <technology name="">
 <attribute name="DATASHEET" value="https://www.mouser.fr/datasheet/2/418/4/NG_DS_1773204-6_A-1533241.pdf"/>
-<attribute name="MOUSER_REF" value="Depends on value" constant="no" />
+<attribute name="MOUSER_REF" value="Depends on value" constant="no"/>
 <attribute name="POWER" value="5W"/>
 </technology>
 </technologies>
@@ -4566,7 +4566,7 @@ Source: &lt;a href="http://www.kycon.com/Pub_Eng_Draw/KMMX-BSMT35S-BTR.pdf"&gt; 
 </devices>
 </deviceset>
 <deviceset name="TRIMPOT" prefix="R" uservalue="yes">
-<description>Various small potentiometers for "set-and-forget" applications</description>
+<description>Various small potentiometers for set-and-forget applications</description>
 <gates>
 <gate name="R?" symbol="TRIMPOT-1" x="0" y="0"/>
 </gates>
