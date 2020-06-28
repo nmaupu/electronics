@@ -1,40 +1,36 @@
 package model
 
 import (
-	"encoding/json"
-	"strconv"
+	"sort"
 )
 
-// APIUInt is an unsigned integer number represented in the Mouser API
-type APIUInt uint
-
-// APIFloat32 is a float32 represented in the Mouser API
-type APIFloat32 float32
+// PriceBreak represents a price depending on quantity ordered
+type PriceBreak struct {
+	Quantity APIUint `json:"Quantity"`
+	Price    string  `json:"Price"`
+	Currency string  `json:"Currency"`
+}
 
 // Part represents an electronic component from Mouser perspective
 type Part struct {
 	Availability           string  `json:"Availability"`
 	DatasheetURL           string  `json:"DataSheetUrl"`
 	Description            string  `json:"Description"`
-	FactoryStock           APIUInt `json:"FactoryStock"`
+	FactoryStock           APIUint `json:"FactoryStock"`
 	ImagePath              string  `json:"ImagePath"`
 	Category               string  `json:"Category"`
 	LeadTime               string  `json:"LeadTime"`
 	LifecycleStatus        string  `json:"LifecycleStatus"`
 	Manufacturer           string  `json:"Manufacturer"`
 	ManufacturerPartNumber string  `json:"ManufacturerPartNumber"`
-	Min                    APIUInt `json:"Min"`
-	Mult                   APIUInt `json:"Mult"`
+	Min                    APIUint `json:"Min"`
+	Mult                   APIUint `json:"Mult"`
 	MouserPartNumber       string  `json:"MouserPartNumber"`
 	ProductAttributes      []struct {
 		AttributeName  string `json:"AttributeName"`
 		AttributeValue string `json:"AttributeValue"`
 	} `json:"ProductAttributes"`
-	PriceBreaks []struct {
-		Quantity APIUInt `json:"Quantity"`
-		Price    string  `json:"Price"`
-		Currency string  `json:"Currency"`
-	} `json:"PriceBreaks,omitempty"`
+	PriceBreaks         []PriceBreak `json:"PriceBreaks,omitempty"`
 	AlternatePackagings []struct {
 		APMfrPN string `json:"APMfrPN"`
 	} `json:"AlternatePackagings"`
@@ -42,12 +38,12 @@ type Part struct {
 	Reeling              bool    `json:"Reeling"`
 	ROHSStatus           string  `json:"ROHSStatus"`
 	SuggestedReplacement string  `json:"SuggestedReplacement"`
-	MultiSimBlue         APIUInt `json:"MultiSimBlue"`
+	MultiSimBlue         APIUint `json:"MultiSimBlue"`
 	UnitWeightKg         struct {
-		UnitWeight APIFloat32 `json:"UnitWeight"`
+		UnitWeight APIFloat `json:"UnitWeight"`
 	} `json:"UnitWeightKg"`
 	StandardCost struct {
-		StandardCost APIFloat32 `json:"Standardcost"`
+		StandardCost APIFloat `json:"Standardcost"`
 	} `json:"StandardCost"`
 	IsDiscontinued        string `json:"IsDiscontinued"`
 	RTM                   string `json:"RTM"`
@@ -66,54 +62,39 @@ type Part struct {
 	} `json:"ProductCompliance"`
 }
 
-// UnmarshalJSON unmarshals a APIUInt object type
-func (i *APIUInt) UnmarshalJSON(data []byte) error {
-	// Basically treat input data as string and convert it to go type
-	// Parameters can be:
-	//   - quoted
-	//   - unquoted
-	//   - empty quoted
-	//   - null
-	var dataStr string
-	s, _ := strconv.Unquote(string(data))
-	s = strconv.Quote(s)
-	//log.Printf("APIUInt, s=%s", s)
-	if err := json.Unmarshal([]byte(s), &dataStr); err != nil {
-		return err
+// GetUnitPrice returns the price depending on quantity based on PriceBreaks field
+func (p *Part) GetUnitPrice(quantity APIUint) PriceBreak {
+	sort.Slice(p.PriceBreaks, func(i, j int) bool {
+		return p.PriceBreaks[i].Quantity < p.PriceBreaks[j].Quantity
+	})
+
+	var previous PriceBreak
+	for _, v := range p.PriceBreaks {
+		if v.Quantity > quantity {
+			if previous.Quantity != 0 {
+				return previous
+			}
+
+			return v
+		}
+		previous = v
 	}
 
-	r, err := strconv.ParseUint(dataStr, 10, 32)
-	if err != nil {
-		*i = APIUInt(0)
-	} else {
-		*i = APIUInt(r)
+	if len(p.PriceBreaks) == 0 {
+		return PriceBreak{}
 	}
+	return p.PriceBreaks[0]
 
-	return nil
 }
 
-// UnmarshalJSON unmarshals a APIFloat32 object type
-func (f *APIFloat32) UnmarshalJSON(data []byte) error {
-	// Basically treat input data as string and convert it to go type
-	// Parameters can be:
-	//   - quoted
-	//   - unquoted
-	//   - empty quoted
-	//   - null
-	var dataStr string
-	s, _ := strconv.Unquote(string(data))
-	s = strconv.Quote(s)
-	//log.Printf("APIFloat32, s=%s", s)
-	if err := json.Unmarshal([]byte(s), &dataStr); err != nil {
-		return err
-	}
+// GetAvailabilityAsNumber returns number of parts available typed as a number
+// API returns a string such as "[0-9]+ In stock"
+func (p *Part) GetAvailabilityAsNumber() APIUint {
+	return GetAPIUintFromString(p.Availability)
+}
 
-	r, err := strconv.ParseFloat(dataStr, 32)
-	if err != nil {
-		*f = APIFloat32(0)
-	} else {
-		*f = APIFloat32(r)
-	}
-
-	return nil
+// GetUnitPriceAsNumber returns unit price typed as a number
+// API returns a string such as "[0-9]+ €"
+func (p *Part) GetUnitPriceAsNumber(quantity APIUint) APIFloat {
+	return GetAPIFloatFromString(p.GetUnitPrice(quantity).Price)
 }

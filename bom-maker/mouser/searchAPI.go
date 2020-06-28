@@ -6,13 +6,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/bom-maker/mouser/model"
 )
 
 const (
-	searchAPIEndpoint = "search"
-	searchAPIVersion  = 1
+	searchAPIEndpoint     = "search"
+	searchAPIVersion      = 1
+	rateLimitedRetryEvery = 2 * time.Second
 )
 
 type searchQuery struct {
@@ -41,7 +43,7 @@ func (a *API) SearchByPartNumber(mouserRef string) (*model.Part, error) {
 
 	// Wait for a token
 	a.waitForBeingAllowed()
-	fmt.Printf("\tAllowed to call API, tokens=%d\n", a.RateLimiter.getTokens())
+	//fmt.Printf("\tAllowed to call API, tokens=%d\n", a.RateLimiter.getTokens())
 
 	resp, err := http.Post(url, ContentType, bytes.NewBuffer(reqBody))
 	if err != nil {
@@ -60,6 +62,17 @@ func (a *API) SearchByPartNumber(mouserRef string) (*model.Part, error) {
 	err = json.Unmarshal(body, &results)
 	if err != nil {
 		return nil, err
+	}
+
+	if len(results.Errors) > 0 {
+		// Checking for rate limited error
+		for _, e := range results.Errors {
+			if e.Code == "TooManyRequests" {
+				return nil, ErrorRateLimited{err}
+			}
+		}
+
+		return nil, fmt.Errorf("An error occurred calling API, err=%v", results.Errors)
 	}
 
 	// Looking for reference into results' parts

@@ -1,14 +1,20 @@
 package bomcsv
 
 import (
+	"encoding/csv"
 	"fmt"
+	"io"
+	"os"
 	"strconv"
+	"unicode/utf8"
+
+	"github.com/bom-maker/mouser/model"
 )
 
-// Part represents an electronic part parsed from a CSV format
-type Part struct {
+// CSVPart represents an electronic part parsed from a CSV format
+type CSVPart struct {
 	// Quantity is the number of this part in the BOM
-	Quantity uint
+	Quantity model.APIUint
 	// Value is the value of the part (Farad, Ohms, etc.)
 	Value string
 	// Device is the device name used in the CAD library
@@ -23,15 +29,15 @@ type Part struct {
 	Description string
 }
 
-// SetPartField set the part's field corresponding to the given header's name and associated value
-func (p *Part) SetPartField(header, value string) error {
+// setPartField set the part's field corresponding to the given header's name and associated value
+func (p *CSVPart) setPartField(header, value string) error {
 	switch header {
 	case "Qty":
 		i, err := strconv.ParseInt(value, 10, 32)
 		if err != nil {
 			return err
 		}
-		p.Quantity = uint(i)
+		p.Quantity = model.APIUint(i)
 	case "Value":
 		p.Value = value
 	case "Device":
@@ -49,4 +55,55 @@ func (p *Part) SetPartField(header, value string) error {
 	}
 
 	return nil
+}
+
+// ReadCSVPartsFrom reads CSV from r and returns a slice of CSVPart
+func ReadCSVPartsFrom(r io.Reader, sep string) ([]CSVPart, error) {
+	parts := make([]CSVPart, 0)
+
+	reader := csv.NewReader(r)
+	reader.Comma, _ = utf8.DecodeRune([]byte(sep))
+
+	// Reading header
+	headers, err := reader.Read()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to read record from CSV, err=%+v", err)
+	}
+
+	for {
+		record, err := reader.Read()
+		if err != nil && err == io.EOF {
+			break
+		} else if err != nil {
+			return parts, fmt.Errorf("Unable to read record from CSV, err=%+v", err)
+		}
+
+		// Reading all fields and create a csv part from it
+		csvPart := CSVPart{}
+		for k, v := range record {
+			err := csvPart.setPartField(headers[k], v)
+			if err != nil {
+				// Silently ignoring errors
+				continue
+			}
+		}
+
+		// Only store parts a Mouser reference is present
+		if csvPart.MouserRef != "" {
+			parts = append(parts, csvPart)
+		}
+	}
+
+	return parts, nil
+}
+
+// GetCSVPart returns a parts from a slice according to its MouserRef
+func GetCSVPart(mouserRef string, parts []CSVPart) CSVPart {
+	for _, v := range parts {
+		if v.MouserRef == mouserRef {
+			return v
+		}
+	}
+
+	return CSVPart{}
 }
