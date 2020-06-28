@@ -84,7 +84,7 @@ func generate(cmd *cli.Cmd) {
 }
 
 func cart(cmd *cli.Cmd) {
-	cmd.Spec = "-c [-s]"
+	cmd.Spec = "-c [-s] [-m]"
 
 	inputSeparator := cmd.StringOpt("s in-sep", ";", "CSV separator used to read from stdin")
 	mouserCartAPIKey := cmd.StringOpt("c cart-api-key", "", "Mouser cart/order API key to use")

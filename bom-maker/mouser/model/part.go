@@ -1,7 +1,20 @@
 package model
 
 import (
+	"regexp"
 	"sort"
+	"strings"
+)
+
+var (
+	// AvailabilitySentences allow to know if a part is in stock or backordered
+	// Yes of course, API is responding with localized sentences...
+	AvailabilitySentences = map[string]bool{
+		"On Order":     false,
+		"In Stock":     true,
+		"Sur commande": false,
+		"En stock":     true,
+	}
 )
 
 // PriceBreak represents a price depending on quantity ordered
@@ -99,4 +112,11 @@ func (p *Part) GetAvailabilityAsNumber() APIUint {
 // API returns a string such as "[0-9]+ €"
 func (p *Part) GetUnitPriceAsNumber(quantity APIUint) APIFloat {
 	return GetAPIFloatFromString(p.GetUnitPrice(quantity).Price)
+}
+
+// InStock returns true if a part is in stock or false if backordered.
+func (p *Part) InStock() bool {
+	re := regexp.MustCompile(`[^0-9]+`)
+	sentence := strings.Trim(re.FindString(p.Availability), " ")
+	return AvailabilitySentences[sentence]
 }

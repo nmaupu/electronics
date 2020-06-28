@@ -39,6 +39,9 @@ func (o *HTML) Write(w io.Writer) error {
 		"GetStock": func(part core.UberPart) model.APIUint {
 			return part.GetAvailabilityAsNumber()
 		},
+		"InStock": func(part core.UberPart) bool {
+			return part.InStock()
+		},
 		"GetTotal": func(parts []core.UberPart) string {
 			if len(parts) == 0 {
 				return "N/A"
@@ -306,7 +309,8 @@ func (o *HTML) Write(w io.Writer) error {
 			<td class="small">{{ .Part.Description }}</td>
 			<td class="small">{{ .MouserRef }}</td>
 			{{- $stock := GetStock . }}
-			<td class="center {{ if gt $stock .Quantity }}ok{{ else }}warning{{ end }}">{{ $stock }}</td>
+			{{- $inStock := InStock . }}
+			<td class="center {{ if or (lt $stock .Quantity) (not $inStock) }}error{{ else }}ok{{ end }}">{{ $stock }}</td>
 			<td class="center">{{ GetPrice . }}</td>
 			<td class="center">{{ GetExtPrice . }}</td>
 			<td class="center"><a {{ $linkAnchors }} href="{{ .DatasheetURL }}"><img alt="datasheet" width="20" src="{{ $datasheetImg }}" /></a></td>
