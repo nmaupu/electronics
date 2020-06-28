@@ -27,9 +27,14 @@ func (o *HTML) Write(w io.Writer) error {
 		"GetPrice": func(part core.UberPart) string {
 			pb := part.GetUnitPrice(part.Quantity)
 			amount := model.GetAPIFloatFromString(pb.Price)
-			grapheme := money.New(0, pb.Currency).Currency().Grapheme
+			//grapheme := money.New(0, pb.Currency).Currency().Grapheme
 
-			return fmt.Sprintf("%0.3f %s", amount, grapheme)
+			return fmt.Sprintf("%0.3f", amount)
+		},
+		"GetExtPrice": func(part core.UberPart) string {
+			pb := part.GetUnitPrice(part.Quantity)
+			amount := model.GetAPIFloatFromString(pb.Price) * model.APIFloat(part.Quantity)
+			return fmt.Sprintf("%0.3f", amount)
 		},
 		"GetStock": func(part core.UberPart) model.APIUint {
 			return part.GetAvailabilityAsNumber()
@@ -175,7 +180,7 @@ func (o *HTML) Write(w io.Writer) error {
 				font-size: 1.2em;
 				background-color: #efefef;
 			}
-			td.description {
+			td.small {
 				font-size: 0.85em;
 			}
 			td.ok {
@@ -284,8 +289,10 @@ func (o *HTML) Write(w io.Writer) error {
 			<th class="sortable" onclick="sortTable(2)">Device{{ $sortIcon }}</th>
 			<th class="sortable" onclick="sortTable(3)">Value{{ $sortIcon }}</th>
 			<th class="sortable" onclick="sortTable(4)">Description{{ $sortIcon }}</th>
-			<th class="sortable" onclick="sortTable(5)">Stock{{ $sortIcon }}</th>
-			<th class="sortable" onclick="sortTable(6)">Unit price{{ $sortIcon }}</th>
+			<th class="sortable" onclick="sortTable(5)">Mouser Ref.{{ $sortIcon }}</th>
+			<th class="sortable" onclick="sortTable(6)">Stock{{ $sortIcon }}</th>
+			<th class="sortable" onclick="sortTable(7)">Unit price{{ $sortIcon }}</th>
+			<th class="sortable" onclick="sortTable(8)">Ext. price{{ $sortIcon }}</th>
 			<th>Datasheet</th>
 			<th>Details</th>
 			<th>Image</th>
@@ -296,10 +303,12 @@ func (o *HTML) Write(w io.Writer) error {
 			<td>{{ .Parts }}</td>
 			<td>{{ .Device }}</td>
 			<td>{{ .Value }}</td>
-			<td class="description">{{ .Part.Description }}</td>
+			<td class="small">{{ .Part.Description }}</td>
+			<td class="small">{{ .MouserRef }}</td>
 			{{- $stock := GetStock . }}
 			<td class="center {{ if gt $stock .Quantity }}ok{{ else }}warning{{ end }}">{{ $stock }}</td>
 			<td class="center">{{ GetPrice . }}</td>
+			<td class="center">{{ GetExtPrice . }}</td>
 			<td class="center"><a {{ $linkAnchors }} href="{{ .DatasheetURL }}"><img alt="datasheet" width="20" src="{{ $datasheetImg }}" /></a></td>
 			<td class="center"><a {{ $linkAnchors }} href="{{ .ProductDetailURL }}"><img alt="details" width="20" src="{{ $mouserImg }}" /></a></td>
 			<td class="center">
