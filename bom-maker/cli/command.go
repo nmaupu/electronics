@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/bom-maker/bomcsv"
@@ -37,11 +38,12 @@ func Process(appName, appDesc, appVersion string) {
 }
 
 func generate(cmd *cli.Cmd) {
-	cmd.Spec = "-o [-s] [-t]"
+	cmd.Spec = "-o [-s] [-t] [-l]"
 
 	outputMode := cmd.StringOpt("o output", "csv", "Output mode [csv,html]")
 	inputSeparator := cmd.StringOpt("s in-sep", ";", "CSV separator used to read from stdin")
 	outputSeparator := cmd.StringOpt("t out-sep", ";", "Separator used to write to stdout")
+	htmlTitle := cmd.StringOpt("l html-title", "BOM - @time", "HTML title to use for HTML generation, use @time to include date and time")
 
 	cmd.Action = func() {
 		// Params checking
@@ -70,9 +72,12 @@ func generate(cmd *cli.Cmd) {
 			}
 			err = out.Write(os.Stdout)
 		case "html":
+			now := time.Now()
+			title := *htmlTitle
+			title = strings.Replace(title, "@time", now.Format("2006-01-02T15:04:05-0700"), 1)
 			out := output.HTML{
 				Parts: parts,
-				Title: fmt.Sprintf("BOM - %s", time.Now().String()),
+				Title: title,
 			}
 			err = out.Write(os.Stdout)
 		}

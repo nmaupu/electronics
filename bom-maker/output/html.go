@@ -288,6 +288,7 @@ func (o *HTML) Write(w io.Writer) error {
 		</style>
 	</head>
 	<body>
+	<h1>{{ .Title }}</h1>
 	<table id="partsTable">
 		<tr>
 			<th class="sortable" onclick="sortTable(0)">Qty{{ $sortIcon }}</th>
