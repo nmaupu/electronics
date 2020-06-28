@@ -83,6 +83,8 @@ func (p *Part) GetUnitPrice(quantity APIUint) PriceBreak {
 	if len(p.PriceBreaks) == 0 {
 		return PriceBreak{}
 	}
+
+	// Nothing else found, returning first one as a default 🤷‍♂️
 	return p.PriceBreaks[0]
 
 }

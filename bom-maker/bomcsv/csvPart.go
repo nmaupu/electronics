@@ -83,7 +83,7 @@ func ReadCSVPartsFrom(r io.Reader, sep string) ([]CSVPart, error) {
 		for k, v := range record {
 			err := csvPart.setPartField(headers[k], v)
 			if err != nil {
-				// Silently ignoring errors
+				// Silently ignoring errors, field does not exist
 				continue
 			}
 		}
@@ -95,15 +95,4 @@ func ReadCSVPartsFrom(r io.Reader, sep string) ([]CSVPart, error) {
 	}
 
 	return parts, nil
-}
-
-// GetCSVPart returns a parts from a slice according to its MouserRef
-func GetCSVPart(mouserRef string, parts []CSVPart) CSVPart {
-	for _, v := range parts {
-		if v.MouserRef == mouserRef {
-			return v
-		}
-	}
-
-	return CSVPart{}
 }

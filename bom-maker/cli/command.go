@@ -78,7 +78,7 @@ func generate(cmd *cli.Cmd) {
 		}
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "An error occurred, err=", err)
+			fmt.Fprintf(os.Stderr, "An error occurred, err=%v", err)
 		}
 	}
 }

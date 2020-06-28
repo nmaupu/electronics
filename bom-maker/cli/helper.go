@@ -22,14 +22,14 @@ func createUberParts(mouserAPIKey string, csvParts []bomcsv.CSVPart) []core.Uber
 	for _, v := range csvParts {
 		//fmt.Printf("Calling Mouser API for part(s) %s (Device=%s, MouserRef=%s)\n", v.Parts, v.Device, v.MouserRef)
 		wg.Add(1)
-		go func(wg *sync.WaitGroup, mouserRef string) {
+		go func(wg *sync.WaitGroup, csvPart bomcsv.CSVPart) {
 			defer wg.Done()
 
 			// If rate limited, retry
 			var err error
 			var p *model.Part
 			for {
-				p, err = api.SearchByPartNumber(mouserRef)
+				p, err = api.SearchByPartNumber(csvPart.MouserRef)
 				if err != nil {
 					if _, ok := err.(mouser.ErrorRateLimited); ok {
 						continue // Rate limited, retrying
@@ -41,17 +41,17 @@ func createUberParts(mouserAPIKey string, csvParts []bomcsv.CSVPart) []core.Uber
 
 			if err != nil {
 				// this is just a warning for that part, not an error per se
-				fmt.Fprintf(os.Stderr, "An error occurred looking for MouserRef %s, err=%+v\n", mouserRef, err)
+				fmt.Fprintf(os.Stderr, "An error occurred looking for MouserRef %s, err=%+v\n", csvPart.MouserRef, err)
 			} else {
 				mutex.Lock()
 				parts = append(parts, core.UberPart{
 					Part:    *p,
-					CSVPart: bomcsv.GetCSVPart(mouserRef, csvParts),
+					CSVPart: csvPart,
 				})
 				mutex.Unlock()
 			}
 
-		}(&wg, v.MouserRef)
+		}(&wg, v)
 
 		// Wait to avoid overloading the API
 		time.Sleep(400 * time.Millisecond)
