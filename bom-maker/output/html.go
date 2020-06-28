@@ -195,6 +195,9 @@ func (o *HTML) Write(w io.Writer) error {
 			td.error {
 				color: #e60000;
 			}
+			tr.error {
+				background-color: #ffb3b3;
+			}
 			img {
 				width: 17px;
 			}
@@ -301,15 +304,15 @@ func (o *HTML) Write(w io.Writer) error {
 			<th>Image</th>
 		</tr>
 		{{- range $k, $v := .Parts }}
-		<tr>
+		{{- $stock := GetStock . }}
+		{{- $inStock := InStock . }}
+		<tr {{ if not $inStock }}class="error"{{ end }}>
 			<td class="center bold">{{ .Quantity }}</td>
 			<td>{{ .Parts }}</td>
 			<td>{{ .Device }}</td>
 			<td>{{ .Value }}</td>
 			<td class="small">{{ .Part.Description }}</td>
 			<td class="small">{{ .MouserRef }}</td>
-			{{- $stock := GetStock . }}
-			{{- $inStock := InStock . }}
 			<td class="center {{ if or (lt $stock .Quantity) (not $inStock) }}error{{ else }}ok{{ end }}">{{ $stock }}</td>
 			<td class="center">{{ GetPrice . }}</td>
 			<td class="center">{{ GetExtPrice . }}</td>
